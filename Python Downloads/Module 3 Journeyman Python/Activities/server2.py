@@ -12,21 +12,29 @@ test = {
 		'key2': 'value2', 
 		'key3': 'value3',
 		}
+for k in test:
+	print k
+	print test[k]
 
 #########################################################
 # ATTEMPTING to send contents and saving it in a a list #
 #########################################################
+# put s.connet and s = socket.socket() out side the for loop to send one whole string
+# s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# s.connect((HOST, PORT))
 for k in test:
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.connect((HOST, PORT))
 	# incoming = s.send("INCOMING MESSAGE")
 	# file_name = s.send(k)
 	# file_content = s.send(test[k])
-	s.send("INCOMING MESSAGE")
+	# s.send("INCOMING MESSAGE")
+	# test_file = s.send(k)
 	# s.send(k)
-	# s.send(test[k])
+	# s.send(k)
+	s.send(k)
 	# print 'sending:' ,file_name ,'with contents ' ,file_content # apparently this doesnt work to
-	print "Message Sent"
+	# print "Message Sent"
 	s.close()
 
 # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -44,7 +52,7 @@ for k in test:
 	# print 'sending: %s with contents %s', (file_name, file_content) # apparently this doesnt work to
 	# s.close()
 
-	# FINDINGS: can use double send by having problems when using variables of s.send(),
+	# FINDINGS: can use double send but having problems when using variables of s.send(),
 	# gives an  [Errno 10054] An existing connection was forcibly closed by the remote host
 	
 

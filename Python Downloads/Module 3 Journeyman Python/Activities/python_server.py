@@ -24,3 +24,44 @@ for i in message_received:
 	print i , '\n'
 conn.close()
 python_server_socket.close()
+
+# from JourneymanActivities.py
+'''1.3) Write a python script which connects to the included server 
+on port 50001 and returns the message it receives.'''
+# returns the message sent by the server
+def journeyman3():
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect(('127.0.0.1', 50001))
+    received_string = s.recv(1024)
+    s.close()
+    return received_string
+
+# from JourneymanString.py (THIS IS THE SERVER)
+# it sends the contents of variable message_list
+def main():
+    HOST  = ''
+    PORT  = 50001    
+    message_list = ['alpha' , 'bravo' , 'charlie' , 'delta']
+    
+    for i in message_list:
+        s = socket.socket(socket.AF_INET , socket.SOCK_STREAM)
+        s.bind((HOST , PORT))
+        s.listen(1)
+        conn, addr = s.accept()
+        conn.send(i)
+        conn.close()
+        
+main()
+
+# from JourneymanAvtivitiesTester.py
+# compares if the message_list in journeymantest3() is equal with the message in def main in JourneymanString.py
+def journeymantest3():
+    message_list = ['alpha' , 'bravo' , 'charlie' , 'delta']
+    
+    for i in message_list:
+        res = journeyman3()
+        if res != i:
+            print "Failed: %s != %s" % (res , i)
+            return -1
+        print res
+    print "Test 3: SUCCESS\n"
